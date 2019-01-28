@@ -1,0 +1,69 @@
+<style>
+
+ .main {
+ background-color: rgba(255, 255, 255, 0.5);
+ margin-top: 100px;
+ padding-bottom: 50px;
+ }
+ .main h1 {
+ font-size: 3.5em;
+ font-family: Arial;
+ color: #2E3759;
+ }
+ .main h2 {
+ font-size: 2em;
+ font-family: Arial;
+ color: #2E3759;
+ }
+ .main h3 {
+ font-size: 2em;
+ font-family: Arial;
+ color: #2E3759;
+ }
+ .main p {
+ font-size:1em;
+ font-family: Arial;
+ color: #2E3759;
+ }
+
+</style>
+
+
+<title>Title</title>
+</head>
+<body>
+<div class="main">
+  <div style="text-align:center">
+  <br><br>
+  <div class="starter-template">
+
+<br><br>
+<h3>You might like these trails!</h3>
+
+<!-- This is the important part!!
+The following code is basically what reads your data and runs your function from app.py
+Don't forget the {% for x in whatever %} if you use a for loop and end the for loop with {% endfor %} -->
+
+<table class="table table-hover">
+     <tr><th>Hike URL</th>
+     <tr><td>{{ recommended_trail_urls[0] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[1] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[2] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[3] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[4] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[5] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[6] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[7] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[8] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[9] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[10] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[11] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[12] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[13] }}</td></tr>
+     <tr><td>{{ recommended_trail_urls[14] }}</td></tr>
+
+</table>
+
+
+</div></div></div>
+</body>

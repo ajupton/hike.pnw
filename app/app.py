@@ -1,0 +1,323 @@
+# App necessities
+from flask import Flask, render_template, request
+import requests
+# Data manipulation
+import pandas as pd
+import numpy as np
+# Data manipulation
+import pandas as pd
+import numpy as np
+# Database connections
+from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, create_database
+import psycopg2
+# lightfm hybrid recommendation system
+from lightfm import LightFM
+from lightfm.cross_validation import random_train_test_split
+# Recommender validation
+from lightfm.evaluation import auc_score
+from lightfm.evaluation import precision_at_k
+# For creating sparse matrices
+from scipy.sparse import coo_matrix, csc_matrix
+from scipy import sparse
+# For parsing the input forms
+from bs4 import BeautifulSoup
+
+
+
+pd.options.display.max_columns=25
+
+
+#This is the function that outputs recommendations for my app.
+def new_user_recommendation(model, interactions, trail_urls, user_dict, trail_dict, user_id="new_user", threshold = 3,nrec_items = 30, show = True):
+    '''
+    Function to produce user recommendations
+    Required Input -
+        - model = Trained model
+        - interactions = dataset used for training the model
+        - trail_urls = urls to return from predictions
+        - user_id = user ID for which we need to generate recommendation
+        - user_dict = Dictionary type input containing interaction_index as key and user_id as value
+        - trail_dict = Dictionary type input containing trail_id as key and item_name as value
+        - threshold = value above which the rating is favorable in new interaction matrix
+        - nrec_items = Number of output recommendation needed
+    Expected Output -
+        - Prints list of trails the given user has already rated
+        - Prints list of N recommended trails which new user hopefully will be interested in
+    '''
+    n_users, n_items = interactions.shape
+    user_x = user_dict[user_id]
+    scores = pd.Series(model.predict(user_x,np.arange(n_items)))
+    scores.index = interactions.columns
+    scores = list(pd.Series(scores.sort_values(ascending=False).index))
+
+    known_items = list(pd.Series(interactions.loc[user_id,:] \
+                                 [interactions.loc[user_id,:] > threshold].index) \
+                                 .sort_values(ascending=False))
+
+    scores = [x for x in scores if x not in known_items]
+    return_score_list = scores[0:nrec_items]
+    return_score_df = pd.DataFrame({'trail_name':return_score_list})
+    return_score_df = return_score_df.merge(trail_urls, on="trail_name")
+    return_urls = return_score_df.iloc[:,1]
+    known_items = list(pd.Series(known_items).apply(lambda x: trail_dict[x]))
+    scores = list(pd.Series(return_score_list).apply(lambda x: trail_dict[x]))
+    if show == True:
+        print("Known Likes:")
+        counter = 1
+        for i in known_items:
+            print(str(counter) + '- ' + str(i))
+            counter+=1
+
+        print("\n Recommended Items:")
+        counter = 1
+        for i in scores:
+            print(str(counter) + '- ' + str(i))
+            counter+=1
+    return return_urls
+
+#Initialize app
+app = Flask(__name__, static_url_path='/static')
+
+#Standard home page
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template('index.html')
+
+#After the user hits submit, the index page redirects to trail_recommendations.html
+@app.route('/trail_recommendations', methods=['GET', 'POST'])
+def recommendations():
+
+    # Gather user input from ideal hike text selection
+    input_user_features = pd.DataFrame([request.form.get('user_feature_options[]')])
+
+    # Parse user input
+    # Add ALL the features for the new user
+    user_feature_new = pd.DataFrame()
+    user_feature_new['epic'] = pd.np.where(input_user_features[0].str.contains('epic'), 1, 0)
+    user_feature_new['snow'] = pd.np.where(input_user_features[0].str.contains('snow'), 1, 0)
+    user_feature_new['flat'] = pd.np.where(input_user_features[0].str.contains('flat'), 1, 0)
+    user_feature_new['challenging'] = pd.np.where(input_user_features[0].str.contains('challenging'), 1, 0)
+    user_feature_new['long'] = pd.np.where(input_user_features[0].str.contains('long'), 1, 0)
+    user_feature_new['beach'] = pd.np.where(input_user_features[0].str.contains('beach'), 1, 0)
+    user_feature_new['beautiful'] = pd.np.where(input_user_features[0].str.contains('beautiful'), 1, 0)
+    user_feature_new['scenic'] = pd.np.where(input_user_features[0].str.contains('scenic'), 1, 0)
+    user_feature_new['amazing'] = pd.np.where(input_user_features[0].str.contains('amazing'), 1, 0)
+    user_feature_new['awesome'] = pd.np.where(input_user_features[0].str.contains('awesome'), 1, 0)
+    user_feature_new['gorgeous'] = pd.np.where(input_user_features[0].str.contains('gorgeous'), 1, 0)
+    user_feature_new['fun'] = pd.np.where(input_user_features[0].str.contains('fun'), 1, 0)
+    user_feature_new['peaceful'] = pd.np.where(input_user_features[0].str.contains('peaceful'), 1, 0)
+    user_feature_new['wonderful'] = pd.np.where(input_user_features[0].str.contains('wonderful'), 1, 0)
+    user_feature_new['pretty'] = pd.np.where(input_user_features[0].str.contains('pretty'), 1, 0)
+    user_feature_new['cool'] = pd.np.where(input_user_features[0].str.contains('cool'), 1, 0)
+    user_feature_new['river'] = pd.np.where(input_user_features[0].str.contains('river'), 1, 0)
+    user_feature_new['scenery'] = pd.np.where(input_user_features[0].str.contains('scenery'), 1, 0)
+    user_feature_new['incredible'] = pd.np.where(input_user_features[0].str.contains('incredible'), 1, 0)
+    user_feature_new['spectacular'] = pd.np.where(input_user_features[0].str.contains('spectacular'), 1, 0)
+    user_feature_new['wildflowers'] = pd.np.where(input_user_features[0].str.contains('wildflowers'), 1, 0)
+    user_feature_new['breathtaking'] = pd.np.where(input_user_features[0].str.contains('breathtaking'), 1, 0)
+    user_feature_new['water'] = pd.np.where(input_user_features[0].str.contains('water'), 1, 0)
+    user_feature_new['quiet'] = pd.np.where(input_user_features[0].str.contains('quiet'), 1, 0)
+    user_feature_new['paved'] = pd.np.where(input_user_features[0].str.contains('paved'), 1, 0)
+    user_feature_new['fantastic'] = pd.np.where(input_user_features[0].str.contains('fantastic'), 1, 0)
+    user_feature_new['short'] = pd.np.where(input_user_features[0].str.contains('|'.join(['short', 'quick'])), 1, 0)
+    user_feature_new['recommended'] = pd.np.where(input_user_features[0].str.contains('|'.join(['recommend','recommended'])), 1, 0)
+    user_feature_new['mountain_views'] = pd.np.where(input_user_features[0].str.contains('|'.join(['mountain','mountains'])), 1, 0)
+    user_feature_new['lake'] = pd.np.where(input_user_features[0].str.contains('|'.join(['lake', 'lakes'])), 1, 0)
+    user_feature_new['forest'] = pd.np.where(input_user_features[0].str.contains('|'.join(['forest', 'tree','trees', 'woods'])), 1, 0)
+    user_feature_new['lovely'] = pd.np.where(input_user_features[0].str.contains('|'.join(['lovely', 'loved','love'])), 1, 0)
+    user_feature_new['dog_friendly'] = pd.np.where(input_user_features[0].str.contains('|'.join(['dog', 'dogs','doggy', 'pup', 'puppy'])), 1, 0)
+    user_feature_new['family_friendly'] = pd.np.where(input_user_features[0].str.contains('|'.join(['kid', 'kids','child','family', 'children'])), 1, 0)
+    user_feature_new['relaxing'] = pd.np.where(input_user_features[0].str.contains('|'.join(['relaxing', 'relaxed'])), 1, 0)
+    user_feature_new['beginnger_friendly'] = pd.np.where(input_user_features[0].str.contains('|'.join(['easy', 'beginner'])), 1, 0)
+    user_feature_new['experts_only'] = pd.np.where(input_user_features[0].str.contains('|'.join(['expert', 'hard','difficult', 'tough'])), 1, 0)
+    user_feature_new['waterfalls'] = pd.np.where(input_user_features[0].str.contains('|'.join(['waterfall', 'waterfalls','falls'])), 1, 0)
+    user_feature_new.rename(index={0: 'new_user'})
+    user_feature_new.index.names = ['review_author']
+
+    # Make connection to database
+    # Database name
+    dbname = 'pnw_hike'
+
+    # Set postgres username
+    username = 'andy'
+
+    ## Using an engine to connect to the postgres db
+    engine = create_engine('postgres://%s@localhost/%s'%(username,dbname))
+
+    # Connect to make queries using psycopg2
+    con = None
+    con = psycopg2.connect(database = dbname, user = username)
+
+    # Trail urls
+    urls_query = """
+    SELECT * FROM trail_urls;
+    """
+    trail_urls_from_sql = pd.read_sql_query(urls_query, con)
+
+    # User features
+    user_features_query = """
+    SELECT * FROM user_features;
+    """
+    user_features_from_sql = pd.read_sql_query(user_features_query, con, index_col='review_author')
+
+    # Trail features raw
+    trail_reviews_raw_query = """
+    SELECT * FROM trail_reviews_raw;
+    """
+    trail_reviews_raw_from_sql = pd.read_sql_query(trail_reviews_raw_query, con)
+
+    # Trail features
+    trail_features_query = """
+    SELECT * FROM trail_features;
+    """
+    trail_features_from_sql = pd.read_sql_query(trail_features_query, con, index_col="trail_name")
+
+    #Clean trail urls df --- CLEAN THIS IN DATABASE
+    trail_urls_from_sql = trail_urls_from_sql.drop(["level_0", "index", "slug", "base_url"], axis=1)
+    #trail_reviews_raw_from_sql = trail_reviews_raw_from_sql.drop("index", axis = 1)
+    # User features --- CLEAN THIS IN DATABASE
+    user_features_df = user_features_from_sql.drop(["index", "review_text", "clean_review"], axis = 1)
+    user_features_df.set_index('review_author', inplace=True)
+    user_features = user_features_df.fillna(0)
+    # Trail features --- CLEAN THIS IN DATABASE
+    trail_features = trail_features_from_sql.drop("index", axis = 1)
+    trail_features = trail_features.fillna(0)
+    # Trail reviews --- CLEAN THIS IN DATABASE
+    trail_reviews_raw_from_sql = trail_reviews_raw_from_sql.drop("index", axis = 1)
+
+    # Convert both to sparse matrices
+    trail_features = sparse.csr_matrix(trail_features.values)
+    user_features = sparse.csr_matrix(user_features.values)
+
+    # Bring in some helper functions
+    # These wonderful function are from the recsys cookbook
+    def create_interaction_matrix(df,user_col, item_col, rating_col, norm= False, threshold = None):
+        '''
+        Function to create an interaction matrix dataframe from transactional type interactions
+        Required Input -
+            - df = Pandas DataFrame containing user-item interactions
+            - user_col = column name containing user's identifier
+            - item_col = column name containing item's identifier
+            - rating col = column name containing user feedback on interaction with a given item
+            - norm (optional) = True if a normalization of ratings is needed
+            - threshold (required if norm = True) = value above which the rating is favorable
+        Expected output -
+            - Pandas dataframe with user-item interactions ready to be fed in a recommendation algorithm
+        '''
+        interactions = df.groupby([user_col, item_col])[rating_col] \
+                .sum().unstack().reset_index(). \
+                fillna(0).set_index(user_col)
+        if norm:
+            interactions = interactions.applymap(lambda x: 1 if x > threshold else 0)
+        return interactions
+
+    def create_user_dict(interactions):
+        '''
+        Function to create a user dictionary based on their index and number in interaction dataset
+        Required Input -
+            interactions - dataset create by create_interaction_matrix
+        Expected Output -
+            user_dict - Dictionary type output containing interaction_index as key and user_id as value
+        '''
+        user_id = list(interactions.index)
+        user_dict = {}
+        counter = 0
+        for i in user_id:
+            user_dict[i] = counter
+            counter += 1
+        return user_dict
+
+    # Create a large sparse dataframe of extant user reviews/ratings
+    interactions = create_interaction_matrix(trail_reviews_raw_from_sql, user_col='review_author', item_col='trail_name', rating_col='review_rating', norm=False, threshold=None)
+
+    # Convert sparse dataframe into a sparse matrix
+    interactions_matrix = sparse.csr_matrix(interactions.values)
+
+    # Align users in the interaction and user matrices due to dropping some trails ----FIX THIS LATER!!
+    # Identify which users are in the interaction matrix and not in user feature space
+    key_diff = set(interactions.index).difference(user_features_from_sql.review_author)
+    where_diff = interactions.index.isin(key_diff)
+
+    # Filter interactions based on users present in user features
+    interactions = interactions.loc[~interactions.index.isin(interactions[where_diff].index)]
+
+    def create_trail_dict(df,id_col,name_col):
+        '''
+        Function to create an item dictionary based on their item_id and item name
+        Required Input -
+            - df = Pandas dataframe with Item information
+            - id_col = Column name containing unique identifier for an item
+            - name_col = Column name containing name of the item
+        Expected Output -
+            item_dict = Dictionary type output containing item_id as key and item_name as value
+        '''
+        item_dict ={}
+        for i in range(df.shape[0]):
+            item_dict[(df.loc[i,id_col])] = df.loc[i,name_col]
+        return item_dict
+
+    # Prep for trail dict
+    trail_urls = trail_urls_from_sql.filter(items=['trail_name', 'trail_url'])
+
+    # Convert new user features to a sparse matrix
+    user_feature_new_sparse = sparse.csr_matrix(user_feature_new.values)
+
+    def concatenate_csc_matrices_by_columns(matrix1, matrix2):
+        '''
+        Function to horizontally stack non-2D/non-coo-matrices because
+        hstack is unhappy with my matrices
+        '''
+        new_data = np.concatenate((matrix1.data, matrix2.data))
+        new_indices = np.concatenate((matrix1.indices, matrix2.indices))
+        new_ind_ptr = matrix2.indptr + len(matrix1.data)
+        new_ind_ptr = new_ind_ptr[1:]
+        new_ind_ptr = np.concatenate((matrix1.indptr, new_ind_ptr))
+
+        return csc_matrix((new_data, new_indices, new_ind_ptr))
+
+    ## Combine new user-feature sparse matrix with current users' sparse matrix
+    new_user_features = concatenate_csc_matrices_by_columns(user_feature_new_sparse, user_features)
+
+
+    # Incorporate new user's selections into the interaction matrix
+    interactions_new_user_df = pd.DataFrame().reindex_like(interactions).iloc[0:0]
+    interactions_new_user_df.loc["new_user"] = 0
+    new_interactions_df = pd.concat([interactions_new_user_df, interactions])
+    interactions_new_user = sparse.csr_matrix(interactions_new_user_df.values)
+    new_interactions_matrix = concatenate_csc_matrices_by_columns(interactions_new_user, interactions_matrix)
+
+    # Make trail dict
+    trails_in_interaction_matrix = pd.DataFrame(interactions_new_user_df.columns.T)
+    trail_dict_prep = trails_in_interaction_matrix.merge(trail_urls, on='trail_name')
+
+    # Add unique identifier to trail dict
+    trail_dict_prep['trail_id'] = trail_dict_prep.index+1
+
+    # Make trail dict
+    trails_dict = create_trail_dict(trail_dict_prep, id_col = 'trail_name', name_col = 'trail_id')
+
+    # With the new interactions df we can defined a user dictionary
+    user_dict = create_user_dict(interactions = new_interactions_df)
+
+    # Run model with new user features and interactions
+    NUM_THREADS = 1 # I can only support one thread on my machine :(
+    NUM_COMPONENTS = 30
+    NUM_EPOCHS = 3
+    ITEM_ALPHA = 1e-6
+
+    # Let's fit a WARP model: these generally have the best performance.
+    model = LightFM(loss='warp', item_alpha=ITEM_ALPHA, no_components=NUM_COMPONENTS)
+
+    # Run 3 epochs
+    model = model.fit(interactions_new_user, user_features=new_user_features, epochs=NUM_EPOCHS, num_threads=NUM_THREADS)
+
+    # Run the model
+    recommended_trail_urls = new_user_recommendation(model, new_interactions_df, user_id="new_user", trail_urls=trail_urls, user_dict=user_dict, trail_dict=trails_dict, nrec_items=20, show=False, threshold=4)
+
+    return render_template('trail_recommendations.html', recommended_trail_urls = recommended_trail_urls)
+
+
+if __name__ == '__main__':
+    #this runs your app locally
+    app.run(host='0.0.0.0', port=8080, debug=True)
