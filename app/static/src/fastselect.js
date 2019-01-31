@@ -750,7 +750,7 @@
         onItemCreate: null,
         onMaxItemsReached: null,
 
-        placeholder: 'Choose option',
+        placeholder: 'Describe your ideal hike',
         searchPlaceholder: 'Search options',
         noResultsText: 'No results',
         userOptionPrefix: 'Add '

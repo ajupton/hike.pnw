@@ -1,69 +1,274 @@
-<style>
+<html>
 
- .main {
- background-color: rgba(255, 255, 255, 0.5);
- margin-top: 100px;
- padding-bottom: 50px;
- }
- .main h1 {
- font-size: 3.5em;
- font-family: Arial;
- color: #2E3759;
- }
- .main h2 {
- font-size: 2em;
- font-family: Arial;
- color: #2E3759;
- }
- .main h3 {
- font-size: 2em;
- font-family: Arial;
- color: #2E3759;
- }
- .main p {
- font-size:1em;
- font-family: Arial;
- color: #2E3759;
- }
+<title>hikepnw.us</title>
 
-</style>
+<head>
+  <h3>You might like these trails!</h3>
 
+  <link rel="stylesheet" href="../static/src/css/style.css">
+  <style>
+    body{
+      background-image:url('https://www.teamunify.com/pnws2/_images/cust_bg_203_1315415959177.jpg');
+      width:100%;
+      background-size: cover;
+    }
+    @media only screen and (max-width: 600px) {
+        body {
+            background-size: auto;
+        }
+    </style>
 
-<title>Title</title>
 </head>
+
 <body>
-<div class="main">
-  <div style="text-align:center">
-  <br><br>
-  <div class="starter-template">
-
-<br><br>
-<h3>You might like these trails!</h3>
-
-<!-- This is the important part!!
-The following code is basically what reads your data and runs your function from app.py
-Don't forget the {% for x in whatever %} if you use a for loop and end the for loop with {% endfor %} -->
-
-<table class="table table-hover">
-     <tr><th>Hike URL</th>
-     <tr><td>{{ recommended_trail_urls[0] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[1] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[2] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[3] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[4] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[5] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[6] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[7] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[8] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[9] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[10] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[11] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[12] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[13] }}</td></tr>
-     <tr><td>{{ recommended_trail_urls[14] }}</td></tr>
-
-</table>
+<div>
 
 
-</div></div></div>
+
+<div class="cards">
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[0] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[0] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[0]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[1] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[1] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[1]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[2] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[2] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[2]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[3] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[3] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[3]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[4] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[4] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[4]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[5] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[5] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[5]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[6] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[6] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[6]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[7] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[7] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[7]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[8] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[8] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[8]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <div class="card-title">
+      <a href="#" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+      <h2>
+          {{ trail_names[9] }}
+      </h2>
+    </div>
+    <div class="card-flap flap1">
+      <div class="card-description">
+        {{ trail_overviews[9] }}
+      </div>
+      <div class="card-flap flap2">
+        <div class="card-actions">
+          <a href="{{ trail_urls[9]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="btn">View on AllTrails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+</div>
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
+
+  <script  src="../static/src/js/index.js"></script>
+
+
 </body>
+
+</html>

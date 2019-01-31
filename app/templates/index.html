@@ -1,8 +1,7 @@
-<!-- A really basic homepage. You may want to look at Bootstrap CSS examples to customize your own app! -->
-
-<!-- your CSS goes between <style> </style> -->
+<html>
+<head>
+<link href='https://fonts.googleapis.com/css?family=Nunito Sans' rel='stylesheet'>
 <style>
-
   body{
     background-image:url('https://www.teamunify.com/pnws2/_images/cust_bg_203_1315415959177.jpg');
     width:100%;
@@ -13,49 +12,48 @@
           background-size: auto;
       }
   }
-
  .main {
  margin-top: 100px;
  padding-bottom: 50px;
  }
  .main h1 {
  font-size: 3.5em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: white;
  }
  .main h2 {
  font-size: 2em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: white;
  }
  .main h3 {
  font-size: 2em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: white;
  }
  .main h4 {m
  font-size: 1.5em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: white;
  }
  .main p {
  font-size:1em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: #2E3759;
  }
  .main form {
  font-size:1em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: #2E3759;
  }
  .main table {
  font-size:1em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: #2E3759;
  }
  .main td {
  font-size:1em;
- font-family: Arial;
+ font-family: 'Nunito Sans';
  color: #2E3759;
  }
      button {
@@ -80,7 +78,6 @@
        background: transparent;
        border-bottom: 1px solid black;
      }
-
      select {
        font-size: 1.3em;
        padding:10px;
@@ -93,13 +90,11 @@
                outline: none;
                border: none;
              }
-
      hr{
        border: 0;
          height: 3px;
          background: #DEDDDA;
      }
-
 </style>
 
 
@@ -109,8 +104,9 @@
 </div>
 
 
-<title>hike.pnw</title>
+<title>hikepnw.us</title>
 </head>
+
 <body>
     <div class="main">
       <div style="text-align:center">
@@ -120,21 +116,20 @@
       </div>
       <br>
 <form name="ideal_hike" action='/trail_recommendations', method='POST'>
-      <div ><h3>WHERE ARE YOU HEADED?</h3></div>
-      <select name="location" id="location" class="selectpicker form-control">
-          <option selected="selected" value = ''>Select Location</option>
-          <option value="location_SOregon_Coast">Southern Oregon Coast</option>
-          <option value="location_NOregon_Coast">Northern Oregon Coast</option>
-          <option value="location_NOregon_Central">North Central Oregon (Greater Portland area)</option>
-          <option value="location_SOregon_Central">South Central Oregon</option>
-          <option value="location_EOregon">Eastern Oregon</option>
-          <option value="location_Washington_Coast">Olympic Peninsula and Washington Coast</option>
-          <option value="location_NWashington">North Central Washington</option>
-          <option value="location_SWashington">South Central Washington</option>
-          <option value="location_EWashington">Eastern Washington</option>
-          <option value="location_Vancouver_Island">Vancouver Island</option>
-          <option value="location_SBC">Southern British Columbia</option>
-          <option value="location_ALL">Show me all of the PNW</option>
+      <div ><h3>Where are you headed?</h3></div>
+      <select name="user_location" id="user_location" class="selectpicker form-control">
+          <option selected="selected" value = 'e'>Select Pacific Northwest Location:</option>
+          <option value="Eastern Oregon">Eastern Oregon</option>
+          <option value="Eastern Washington">Eastern Washington</option>
+          <option value="North Central Oregon">North Central Oregon (greater Portland)</option>
+          <option value="North Central Washington">North Central Washington</option>
+          <option value="Northern Oregon Coast">Northern Oregon Coast</option>
+          <option value="Olympic Peninsula and Vancouver Island">Olympic Peninsula and Vancouver Island</option>
+          <option value="Southern British Columbia">Southern British Columbia</option>
+          <option value="Southern Oregon Coast">Southern Oregon Coast</option>
+          <option value="South Central Oregon">South Central Oregon</option>
+          <option value="South Central Washington">South Central Washington</option>
+          <option value="e">Show me all of the PNW!</option>
       </select>
       <br>
 
@@ -146,43 +141,43 @@
         <script src="https://rawgit.com/dbrekalo/fastselect/master/dist/fastselect.min.js"></script>
 
         <select name = "user_feature_options" class="multipleSelect" multiple name= "user_features_mult">
-          <option value="epic">Epic</option>
-          <option value="snow">Snow</option>
-          <option value="flat">Flat</option>
-          <option value="challenging">Challenging</option>
-          <option value="long">Long</option>
-          <option value="beach">Beach</option>
-          <option value="beautiful">Beautiful</option>
-          <option value="scenic">Scenic</option>
           <option value="amazing">Amazing</option>
           <option value="awesome">Awesome</option>
-          <option value="gorgeous">Gorgeous</option>
-          <option value="fun">Fun</option>
-          <option value="peaceful">Peaceful</option>
-          <option value="wonderful">Wonderful</option>
-          <option value="pretty">Pretty</option>
-          <option value="cool">Cool</option>
-          <option value="river">River</option>
-          <option value="scenery">Scenery</option>
-          <option value="incredible">Incredible</option>
-          <option value="spectacular">Spectacular</option>
-          <option value="wildflowers">Wildflowers</option>
+          <option value="beach">Beach</option>
+          <option value="beautiful">Beautiful</option>
+          <option value="beginnger_friendly">Beginner Friendly</option><!--spelled this wrong in datatable is correct here -->
           <option value="breathtaking">Breathtaking</option>
-          <option value="water">Water</option>
-          <option value="quiet">Quiet</option>
-          <option value="paved">Paved</option>
-          <option value="fantastic">Fantastic</option>
-          <option value="short">Short</option>
-          <option value="recommended">Recommended</option>
-          <option value="mountain_views">Mountain Views</option>
-          <option value="lake">Lake</option>
-          <option value="forest">Forested</option>
-          <option value="lovely">Lovely</option>
-          <option value="dog_friendly">Dog Friendly</option>
-          <option value="family_friendly">Family Friendly</option>
-          <option value="relaxing">Relaxing</option>
-          <option value="beginnger_friendly">Flat</option><!--spelled this wrong in datatable is correct here -->
+          <option value="challenging">Challenging</option>
+          <option value="cool">Cool</option>
+          <option value="epic">Epic</option>
           <option value="experts_only">Experts Only</option>
+          <option value="family_friendly">Family Friendly</option>
+          <option value="fantastic">Fantastic</option>
+          <option value="flat">Flat</option>
+          <option value="forest">Forested</option>
+          <option value="fun">Fun</option>
+          <option value="dog_friendly">Good for dogs</option>
+          <option value="gorgeous">Gorgeous</option>
+          <option value="incredible">Incredible</option>
+          <option value="lake">Lake nearby</option>
+          <option value="long">Long</option>
+          <option value="lovely">Lovely</option>
+          <option value="mountain_views">Mountain Views</option>
+          <option value="scenery">Nice Scenery</option>
+          <option value="paved">Paved</option>
+          <option value="peaceful">Peaceful</option>
+          <option value="pretty">Pretty</option>
+          <option value="quiet">Quiet</option>
+          <option value="recommended">Recommended</option>
+          <option value="relaxing">Relaxing</option>
+          <option value="river">River</option>
+          <option value="scenic">Scenic</option>
+          <option value="short">Short</option>
+          <option value="snow">Snow</option>
+          <option value="spectacular">Spectacular</option>
+          <option value="water">Water</option>
+          <option value="wildflowers">Wildflowers</option>
+          <option value="wonderful">Wonderful</option>
         </select>
 
 
@@ -218,154 +213,100 @@
           <tr>
             <td>
               <select name="trail_feature_select1" id="trail_feature_select1" class="selectpicker form-control">
-                <option selected="selected">Dog Friendly</option>
-                <option value="dog_friendly">Dog Friendly</option>
+                <option selected="selected" value="dog_friendly">Dog Friendly</option>
+                <option value="avoid_bugs">Avoid Bugs</option>
+                <option value="dog_no">Avoid Dogs</option>
                 <option value="backpacking">Backpacking</option>
                 <option value="birding">Birding</option>
                 <option value="camping">Camping</option>
-                <option value="canoeing">Canoeing</option>
-                <option value="cave">Caves</option>
-                <option value="fishing">Fishing</option>
-                <option value="fly_fishing">Fly Fishing</option>
-                <option value="historic_site">Historic Site</option>
-                <option value="horses">Horses known in area</option>
-                <option value="hot_springs">Hot Springs</option>
-                <option value="ice_climbing">Ice Climbing</option>
+                <option value="canoeing">Canoeing*</option>
+                <option value="cave">Caves*</option>
+                <option value="xc_skiing">Cross Country Skiing*</option>
+                <option value="dog_friendly">Dog Friendly</option>
                 <option value="kids">Family Friendly</option>
+                <option value="fishing">Fishing</option>
+                <option value="fly_fishing">Fly Fishing*</option>
+                <option value="no_shade">Full Sun (no shade)*</option>
+                <option value="historic_site">Historic Site*</option>
+                <option value="horses">Horses known in area</option>
+                <option value="hot_springs">Hot Springs*</option>
                 <option value="lake">Lake</option>
-                <option value="no_shade">Full Sun (no shade)</option>
-                <option value="old_growth">Old Growth Forest</option>
-                <option value="paved">Paved</option>
+                <option value="long">Long (8+ miles)</option>
+                <option value="loop_trail">Loop Trail</option>
+                <option value="moderate">Moderate Length (3-8 miles)</option>
+                <option value="old_growth">Old Growth Forest*</option>
+                <option value="out_and_back_trail">Out and Back Trail</option>
+                <option value="not_rocky">Not Rocky</option>
+                <option value="not_too_steep">Not Too Steep</option>
+                <option value="paved">Paved*</option>
                 <option value="river">River</option>
                 <option value="rock_climbing">Rock Climbing</option>
-                <option value="scenic_driving">Scenic Driving</option>
-                <option value="sea_kayaking">Sea Kayaking</option>
+                <option value="sea_kayaking">Sea Kayaking*</option>
+                <option value="short">Short (under 3 miles)</option>
                 <option value="snow">Snow</option>
-                <option value="snowboarding">Snowboarding</option>
                 <option value="snowshoeing">Snowshoeing</option>
                 <option value="strollers">Stroller Friendly</option>
-                <option value="surfing">Surfing</option>
                 <option value="trail_running">Trail Running</option>
                 <option value="waterfall">Waterfall</option>
                 <option value="wildflowers">Wildflowers</option>
                 <option value="wildlife">Wildlife</option>
-                <option value="xc_skiing">Cross Country Skiing</option>
-                <option value="dog_no">Avoid Dogs</option>
-                <option value="not_rocky">Not Rocky</option>
-                <option value="avoid_bugs">Avoid Bugs</option>
-                <option value="not_too_steep">Not Too Steep</option>
-                <option value="short">Short (under 3 miles)</option>
-                <option value="moderate">Moderate Length (3-8 miles)</option>
-                <option value="long">Long (8+ miles)</option>
-                <option value="loop_trail">Loop Trail</option>
-                <option value="out_and_back_trail">Out and Back Trail</option>
               </select>
             </td>
             <td>
               <select name="trail_feature_select2" id="trail_feature_select2" class="selectpicker form-control">
-                <option selected="selected">Moderate Length (3-8 miles)</option>
-                <option value="dog_friendly">Dog Friendly</option>
+                <option selected="selected" value="moderate">Moderate Length (3-8 miles)</option>
+                <option value="avoid_bugs">Avoid Bugs</option>
+                <option value="dog_no">Avoid Dogs</option>
                 <option value="backpacking">Backpacking</option>
                 <option value="birding">Birding</option>
                 <option value="camping">Camping</option>
-                <option value="canoeing">Canoeing</option>
-                <option value="cave">Caves</option>
-                <option value="fishing">Fishing</option>
-                <option value="fly_fishing">Fly Fishing</option>
-                <option value="historic_site">Historic Site</option>
-                <option value="horses">Horses known in area</option>
-                <option value="hot_springs">Hot Springs</option>
-                <option value="ice_climbing">Ice Climbing</option>
+                <option value="canoeing">Canoeing*</option>
+                <option value="cave">Caves*</option>
+                <option value="xc_skiing">Cross Country Skiing*</option>
+                <option value="dog_friendly">Dog Friendly</option>
                 <option value="kids">Family Friendly</option>
+                <option value="fishing">Fishing</option>
+                <option value="fly_fishing">Fly Fishing*</option>
+                <option value="no_shade">Full Sun (no shade)*</option>
+                <option value="historic_site">Historic Site*</option>
+                <option value="horses">Horses known in area</option>
+                <option value="hot_springs">Hot Springs*</option>
                 <option value="lake">Lake</option>
-                <option value="no_shade">Full Sun (no shade)</option>
-                <option value="old_growth">Old Growth Forest</option>
-                <option value="paved">Paved</option>
+                <option value="long">Long (8+ miles)</option>
+                <option value="loop_trail">Loop Trail</option>
+                <option value="moderate">Moderate Length (3-8 miles)</option>
+                <option value="old_growth">Old Growth Forest*</option>
+                <option value="out_and_back_trail">Out and Back Trail</option>
+                <option value="not_rocky">Not Rocky</option>
+                <option value="not_too_steep">Not Too Steep</option>
+                <option value="paved">Paved*</option>
                 <option value="river">River</option>
                 <option value="rock_climbing">Rock Climbing</option>
-                <option value="scenic_driving">Scenic Driving</option>
-                <option value="sea_kayaking">Sea Kayaking</option>
+                <option value="sea_kayaking">Sea Kayaking*</option>
+                <option value="short">Short (under 3 miles)</option>
                 <option value="snow">Snow</option>
-                <option value="snowboarding">Snowboarding</option>
                 <option value="snowshoeing">Snowshoeing</option>
                 <option value="strollers">Stroller Friendly</option>
-                <option value="surfing">Surfing</option>
                 <option value="trail_running">Trail Running</option>
                 <option value="waterfall">Waterfall</option>
                 <option value="wildflowers">Wildflowers</option>
                 <option value="wildlife">Wildlife</option>
-                <option value="xc_skiing">Cross Country Skiing</option>
-                <option value="dog_no">Avoid Dogs</option>
-                <option value="not_rocky">Not Rocky</option>
-                <option value="avoid_bugs">Avoid Bugs</option>
-                <option value="not_too_steep">Not Too Steep</option>
-                <option value="short">Short (under 3 miles)</option>
-                <option value="moderate">Moderate Length (3-8 miles)</option>
-                <option value="long">Long (8+ miles)</option>
-                <option value="loop_trail">Loop Trail</option>
-                <option value="out_and_back_trail">Out and Back Trail</option>
-              </select>
-            </td>
-            <td>
-              <select name="trail_feature_select3" id="trail_feature_select3" class="selectpicker form-control">
-                <option selected="selected">Waterfall</option>
-                <option value="dog_friendly">Dog Friendly</option>
-                <option value="backpacking">Backpacking</option>
-                <option value="birding">Birding</option>
-                <option value="camping">Camping</option>
-                <option value="canoeing">Canoeing</option>
-                <option value="cave">Caves</option>
-                <option value="fishing">Fishing</option>
-                <option value="fly_fishing">Fly Fishing</option>
-                <option value="historic_site">Historic Site</option>
-                <option value="horses">Horses known in area</option>
-                <option value="hot_springs">Hot Springs</option>
-                <option value="ice_climbing">Ice Climbing</option>
-                <option value="kids">Family Friendly</option>
-                <option value="lake">Lake</option>
-                <option value="no_shade">Full Sun (no shade)</option>
-                <option value="old_growth">Old Growth Forest</option>
-                <option value="paved">Paved</option>
-                <option value="river">River</option>
-                <option value="rock_climbing">Rock Climbing</option>
-                <option value="scenic_driving">Scenic Driving</option>
-                <option value="sea_kayaking">Sea Kayaking</option>
-                <option value="snow">Snow</option>
-                <option value="snowboarding">Snowboarding</option>
-                <option value="snowshoeing">Snowshoeing</option>
-                <option value="strollers">Stroller Friendly</option>
-                <option value="surfing">Surfing</option>
-                <option value="trail_running">Trail Running</option>
-                <option value="waterfall">Waterfall</option>
-                <option value="wildflowers">Wildflowers</option>
-                <option value="wildlife">Wildlife</option>
-                <option value="xc_skiing">Cross Country Skiing</option>
-                <option value="dog_no">Avoid Dogs</option>
-                <option value="not_rocky">Not Rocky</option>
-                <option value="avoid_bugs">Avoid Bugs</option>
-                <option value="not_too_steep">Not Too Steep</option>
-                <option value="short">Short (under 3 miles)</option>
-                <option value="moderate">Moderate Length (3-8 miles)</option>
-                <option value="long">Long (8+ miles)</option>
-                <option value="loop_trail">Loop Trail</option>
-                <option value="out_and_back_trail">Out and Back Trail</option>
               </select>
             </td>
           </tr>
         </table>
 
-
-
       <div class='buttons'>
 
-    <!-- This is what takes you to my next page recommender.html -->
-
+    <div ><h4>*Some trail features only available for a limited subset of trails</h4></div>
 
         <button type="submit">SHOW ME SOME TRAILS!</button>
 
+    </div>
 </form>
 
 
     </div>
     </div>
   </body>
+</html>
