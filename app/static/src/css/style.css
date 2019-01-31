@@ -34,6 +34,7 @@ body{
   background-image:url('https://www.teamunify.com/pnws2/_images/cust_bg_203_1315415959177.jpg');
   width:100%;
   background-size: cover;
+  background-position: center;
 }
 @media only screen and (max-width: 600px) {
     body {
@@ -41,7 +42,7 @@ body{
     }
 }
 a.btn {
-  background: #0096a0;
+  background: #2E3759;
   border-radius: 4px;
   box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.25);
   color: #ffffff;
@@ -52,7 +53,10 @@ a.btn {
   transition: all 0.1s 0s ease-out;
 }
 .no-touch a.btn:hover {
-  background: #00a2ad;
+  background: rgba(0,0,0,0);
+  color: #2E3759;
+  border-color: #2E3759;
+  background: rgba(0,0,0,0);
   box-shadow: 0px 8px 2px 0 rgba(0, 0, 0, 0.075);
   -webkit-transform: translateY(-2px);
           transform: translateY(-2px);
@@ -60,7 +64,7 @@ a.btn {
 }
 .no-touch a.btn:active,
 a.btn:active {
-  background: #008a93;
+  background: #2E3759;
   box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.25);
   -webkit-transform: translate3d(0, 1px, 0);
           transform: translate3d(0, 1px, 0);

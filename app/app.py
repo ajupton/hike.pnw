@@ -4,25 +4,16 @@ import requests
 # Data manipulation
 import pandas as pd
 import numpy as np
-# Data manipulation
-import pandas as pd
-import numpy as np
 # Database connections
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 import psycopg2
-# lightfm hybrid recommendation system
+# lightfm hybrid recommendation algorithm
 from lightfm import LightFM
 from lightfm.cross_validation import random_train_test_split
-# Recommender validation
-from lightfm.evaluation import auc_score
-from lightfm.evaluation import precision_at_k
 # For creating sparse matrices
 from scipy.sparse import coo_matrix, csc_matrix
 from scipy import sparse
-# For parsing the input forms
-from bs4 import BeautifulSoup
-
 
 
 pd.options.display.max_columns=25
@@ -40,7 +31,8 @@ def index():
 def recommendations():
 
     # Gather user input from ideal hike text selection
-    input_user_features = pd.DataFrame([request.form.get('user_feature_options[]')])
+    user_input = request.form.getlist('user_feature_options[]')
+    input_user_features = pd.DataFrame([" ".join(user_input)])
 
     # Gather user filters - location, feature1, feature2
     user_location = request.form['user_location']
@@ -137,40 +129,40 @@ def recommendations():
     # Bring in some helper functions
     # These functions are adapted from the recsys cookbook
     def create_interaction_matrix(df,user_col, item_col, rating_col, norm= False, threshold = None):
-        '''
-        Function to create an interaction matrix dataframe from transactional type interactions
-        Required Input -
-            - df = Pandas DataFrame containing user-item interactions
-            - user_col = column name containing user's identifier
-            - item_col = column name containing item's identifier
-            - rating col = column name containing user feedback on interaction with a given item
-            - norm (optional) = True if a normalization of ratings is needed
-            - threshold (required if norm = True) = value above which the rating is favorable
-        Expected output -
-            - Pandas dataframe with user-item interactions ready to be fed in a recommendation algorithm
-        '''
-        interactions = df.groupby([user_col, item_col])[rating_col] \
-                .sum().unstack().reset_index(). \
-                fillna(0).set_index(user_col)
-        if norm:
-            interactions = interactions.applymap(lambda x: 1 if x > threshold else 0)
-        return interactions
+      '''
+      Function to create an interaction matrix dataframe from transactional type interactions
+      Required Input -
+          - df = Pandas DataFrame containing user-item interactions
+          - user_col = column name containing user's identifier
+          - item_col = column name containing item's identifier
+          - rating col = column name containing user feedback on interaction with a given item
+          - norm (optional) = True if a normalization of ratings is needed
+          - threshold (required if norm = True) = value above which the rating is favorable
+      Expected output -
+          - Pandas dataframe with user-item interactions ready to be fed in a recommendation algorithm
+      '''
+      interactions = df.groupby([user_col, item_col])[rating_col] \
+              .sum().unstack().reset_index(). \
+              fillna(0).set_index(user_col)
+      if norm:
+          interactions = interactions.applymap(lambda x: 1 if x > threshold else 0)
+      return interactions
 
     def create_user_dict(interactions):
-        '''
-        Function to create a user dictionary based on their index and number in interaction dataset
-        Required Input -
-            interactions - dataset create by create_interaction_matrix
-        Expected Output -
-            user_dict - Dictionary type output containing interaction_index as key and user_id as value
-        '''
-        user_id = list(interactions.index)
-        user_dict = {}
-        counter = 0
-        for i in user_id:
-            user_dict[i] = counter
-            counter += 1
-        return user_dict
+      '''
+      Function to create a user dictionary based on their index and number in interaction dataset
+      Required Input -
+          interactions - dataset create by create_interaction_matrix
+      Expected Output -
+          user_dict - Dictionary type output containing interaction_index as key and user_id as value
+      '''
+      user_id = list(interactions.index)
+      user_dict = {}
+      counter = 0
+      for i in user_id:
+          user_dict[i] = counter
+          counter += 1
+      return user_dict
 
     # Create a large sparse dataframe of extant user reviews/ratings
     interactions = create_interaction_matrix(trail_reviews_raw_from_sql, user_col='review_author', item_col='trail_name', rating_col='review_rating', norm=False, threshold=None)
@@ -187,19 +179,19 @@ def recommendations():
     interactions_matrix = sparse.csr_matrix(interactions.values)
 
     def create_trail_dict(df,id_col,name_col):
-        '''
-        Function to create an item dictionary based on their item_id and item name
-        Required Input -
-            - df = Pandas dataframe with Item information
-            - id_col = Column name containing unique identifier for an item
-            - name_col = Column name containing name of the item
-        Expected Output -
-            item_dict = Dictionary type output containing item_id as key and item_name as value
-        '''
-        item_dict ={}
-        for i in range(df.shape[0]):
-            item_dict[(df.loc[i,id_col])] = df.loc[i,name_col]
-        return item_dict
+      '''
+      Function to create an item dictionary based on their item_id and item name
+      Required Input -
+          - df = Pandas dataframe with Item information
+          - id_col = Column name containing unique identifier for an item
+          - name_col = Column name containing name of the item
+      Expected Output -
+          item_dict = Dictionary type output containing item_id as key and item_name as value
+      '''
+      item_dict ={}
+      for i in range(df.shape[0]):
+          item_dict[(df.loc[i,id_col])] = df.loc[i,name_col]
+      return item_dict
 
     # Prep for trail dict
     trail_urls = trail_urls_info[['trail_name', 'trail_url']]
@@ -208,17 +200,17 @@ def recommendations():
     user_feature_new_sparse = sparse.csr_matrix(user_feature_new.values)
 
     def concatenate_csc_matrices_by_columns(matrix1, matrix2):
-        '''
-        Function to horizontally stack non-2D/non-coo-matrices because
-        hstack is unhappy with my matrices
-        '''
-        new_data = np.concatenate((matrix1.data, matrix2.data))
-        new_indices = np.concatenate((matrix1.indices, matrix2.indices))
-        new_ind_ptr = matrix2.indptr + len(matrix1.data)
-        new_ind_ptr = new_ind_ptr[1:]
-        new_ind_ptr = np.concatenate((matrix1.indptr, new_ind_ptr))
+      '''
+      Function to horizontally stack non-2D/non-coo-matrices because
+      hstack is unhappy with my matrices
+      '''
+      new_data = np.concatenate((matrix1.data, matrix2.data))
+      new_indices = np.concatenate((matrix1.indices, matrix2.indices))
+      new_ind_ptr = matrix2.indptr + len(matrix1.data)
+      new_ind_ptr = new_ind_ptr[1:]
+      new_ind_ptr = np.concatenate((matrix1.indptr, new_ind_ptr))
 
-        return csc_matrix((new_data, new_indices, new_ind_ptr))
+      return csc_matrix((new_data, new_indices, new_ind_ptr))
 
     ## Combine new user-feature sparse matrix with current users' sparse matrix
     new_user_features = concatenate_csc_matrices_by_columns(user_feature_new_sparse, user_features)
@@ -256,62 +248,62 @@ def recommendations():
     model = model.fit(interactions_new_user, user_features=new_user_features, epochs=NUM_EPOCHS, num_threads=NUM_THREADS)
 
     def new_user_recommendation(model, interactions, trail_urls_info, user_dict, trail_dict, user_location = user_location, trail_feature_select1 = trail_feature_select1, trail_feature_select2 = trail_feature_select2, user_id = "new_user", threshold = 3, nrec_items = 300):
-        '''
-        Function to produce user recommendations
-        Required Input -
-            - model = Trained model
-            - interactions = dataset used for training the model
-            - trail_urls = urls to return from predictions
-            - user_id = user ID for which we need to generate recommendation
-            - user_dict = Dictionary type input containing interaction_index as key and user_id as value
-            - trail_dict = Dictionary type input containing trail_id as key and item_name as value
-            - threshold = value above which the rating is favorable in new interaction matrix
-            - nrec_items = Number of output recommendation needed
-            - location = location filter selection
-            - trail_feature_select1 (1-3) = trail filter feature selections
-        Expected Output -
-            - Prints list of trails the given user has already rated
-            - Prints list of N recommended trails which new user hopefully will be interested in
-        '''
-        n_users, n_items = interactions.shape
-        user_x = user_dict[user_id]
-        scores = pd.Series(model.predict(user_x,np.arange(n_items)))
-        scores.index = interactions.columns
-        scores = list(pd.Series(scores.sort_values(ascending=False).index))
+      '''
+      Function to produce user recommendations
+      Required Input -
+          - model = Trained model
+          - interactions = dataset used for training the model
+          - trail_urls = urls to return from predictions
+          - user_id = user ID for which we need to generate recommendation
+          - user_dict = Dictionary type input containing interaction_index as key and user_id as value
+          - trail_dict = Dictionary type input containing trail_id as key and item_name as value
+          - threshold = value above which the rating is favorable in new interaction matrix
+          - nrec_items = Number of output recommendation needed
+          - location = location filter selection
+          - trail_feature_select1 (1-3) = trail filter feature selections
+      Expected Output -
+          - Prints list of trails the given user has already rated
+          - Prints list of N recommended trails which new user hopefully will be interested in
+      '''
+      n_users, n_items = interactions.shape
+      user_x = user_dict[user_id]
+      scores = pd.Series(model.predict(user_x,np.arange(n_items)))
+      scores.index = interactions.columns
+      scores = list(pd.Series(scores.sort_values(ascending=False).index))
 
-        known_items = list(pd.Series(interactions.loc[user_id,:] \
-                                     [interactions.loc[user_id,:] > threshold].index) \
-                                     .sort_values(ascending=False))
+      known_items = list(pd.Series(interactions.loc[user_id,:] \
+                                   [interactions.loc[user_id,:] > threshold].index) \
+                                   .sort_values(ascending=False))
 
-        scores = [x for x in scores if x not in known_items]
-        return_score_list = scores[0:nrec_items]
-        return_score_df = pd.DataFrame({'trail_name':return_score_list})
-        return_score_df = return_score_df.merge(trail_urls_info, on="trail_name")
-        # Filter for location. 'e' is for everything => Show me all PNW trails
-        if user_location != 'e':
-            return_score_df = return_score_df.loc[return_score_df["location"] == user_location]
-        # Filter for feature 1
-        return_score_df = return_score_df.loc[return_score_df[trail_feature_select1] == 1]
-        # Filter for feature 2
-        return_score_df = return_score_df.loc[return_score_df[trail_feature_select2] == 1]
-        # Only include top 15 selection
-        return_score_df = return_score_df.head(15)
-        # Parse dataframe into lists for return homepage
-        trail_names = list(return_score_df["trail_name"])
-        trail_overviews = list(return_score_df["overview"])
-        trail_urls = list(return_score_df["trail_url"])
+      scores = [x for x in scores if x not in known_items]
+      return_score_list = scores[0:nrec_items]
+      return_score_df = pd.DataFrame({'trail_name':return_score_list})
+      return_score_df = return_score_df.merge(trail_urls_info, on="trail_name")
+      # Filter for location. 'e' is for everything => Show me all PNW trails
+      if user_location != 'e':
+          return_score_df = return_score_df.loc[return_score_df["location"] == user_location]
+      # Filter for feature 1
+      return_score_df = return_score_df.loc[return_score_df[trail_feature_select1] == 1]
+      # Filter for feature 2
+      return_score_df = return_score_df.loc[return_score_df[trail_feature_select2] == 1]
+      # Only include top 15 selection
+      return_score_df = return_score_df.head(15)
+      # Parse dataframe into lists for return homepage
+      trail_names = list(return_score_df["trail_name"])
+      trail_overviews = list(return_score_df["overview"])
+      trail_urls = list(return_score_df["trail_url"])
+      card_image_urls = list(return_score_df["card_image_url"])
 
-        return trail_names, trail_overviews, trail_urls
+      return trail_names, trail_overviews, trail_urls, card_image_urls
 
     # Run the model
-    trail_names, trail_overviews, trail_urls = new_user_recommendation(model, new_interactions_df, user_id="new_user", trail_urls_info=trail_urls_info, user_location=user_location, trail_feature_select1=trail_feature_select1, trail_feature_select2=trail_feature_select2, user_dict=user_dict, trail_dict=trails_dict, nrec_items=1000, threshold=4)
+    trail_names, trail_overviews, trail_urls, card_image_urls = new_user_recommendation(model, new_interactions_df, user_id="new_user", trail_urls_info=trail_urls_info, user_location=user_location, trail_feature_select1=trail_feature_select1, trail_feature_select2=trail_feature_select2, user_dict=user_dict, trail_dict=trails_dict, nrec_items=1000, threshold=4)
 
     # Change 'e' if selected
     if user_location == 'e':
-        user_location = "all of the Pacific Northwest"
+      user_location = "all of the Pacific Northwest"
 
-    return render_template('trail_recommendations.html', trail_names = trail_names, trail_overviews = trail_overviews, trail_urls = trail_urls, trail_feature_select1 = trail_feature_select1, trail_feature_select2 = trail_feature_select2, user_location = user_location)
-
+    return render_template('trail_recommendations.html', trail_names = trail_names, trail_overviews = trail_overviews, trail_urls = trail_urls, card_image_urls = card_image_urls, trail_feature_select1 = trail_feature_select1, trail_feature_select2 = trail_feature_select2, user_location = user_location, input_user_features = user_input)
 
 if __name__ == '__main__':
     #this runs your app locally

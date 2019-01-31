@@ -1,7 +1,68 @@
 <html>
 <head>
-<link href='https://fonts.googleapis.com/css?family=Nunito Sans' rel='stylesheet'>
+<!--Font-->
+  <link href='https://fonts.googleapis.com/css?family=Nunito Sans' rel='stylesheet'>
+<!-- Favicon -->
+  <link rel="icon" href="../static/src/images/hikepnw_logo.png">
+
+
 <style>
+  #menubar{
+  width:100%;
+  height:50px;
+  background: rgba(0,0,0,0);
+  }
+  .logoframe {
+    height: 30px;      /* equals max image height */
+    width: 60px;
+    white-space: nowrap;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .helper {
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+  }
+
+  .logo {
+      vertical-align: middle;
+      max-height: 30px;
+      max-width: 60px;
+  }
+  .menuspacer {
+  height: 100%;
+  width: 25px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 50px;
+  }
+  .menuactive {
+  color: #999966;
+  text-decoration: none;
+  }
+  .menu, .menu:visited{
+    height: 100%;
+    width: 80px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 50px;
+    color: #2E3759;
+    text-decoration: none;
+  }
+  .menu:hover {
+    color: white;
+    background: #000000;
+    text-decoration: none;
+  }
+  .menu:active {
+    color: #2E3759;
+    text-decoration: none;
+  }
+
   body{
     background-image:url('https://www.teamunify.com/pnws2/_images/cust_bg_203_1315415959177.jpg');
     width:100%;
@@ -107,6 +168,24 @@
 <title>hikepnw.us</title>
 </head>
 
+<!-- Navigation Menu -->
+ <div id="menubar">
+   <div class="menuspacer">
+   </div>
+   <div class="logoframe">
+       <span class="helper"></span>
+       <a href="/"><img class="logo" src="../static/src/images/hikepnw_logo.png" height=30 /></a>
+   </div>
+   <div class="menu">
+     <a href="about" class="menu">About</a>
+   </div>
+   <div class="menu">
+     <a href="contact" class="menu">Contact</a>
+   </div>
+ </div>
+
+
+
 <body>
     <div class="main">
       <div style="text-align:center">
@@ -114,7 +193,6 @@
       <div class="starter-template">
         <h1>FIND A TRAIL THAT FITS YOU!</h1>
       </div>
-      <br>
 <form name="ideal_hike" action='/trail_recommendations', method='POST'>
       <div ><h3>Where are you headed?</h3></div>
       <select name="user_location" id="user_location" class="selectpicker form-control">
@@ -140,7 +218,7 @@
         <script src="https://rawgit.com/dbrekalo/fastsearch/master/dist/fastsearch.min.js"></script>
         <script src="https://rawgit.com/dbrekalo/fastselect/master/dist/fastselect.min.js"></script>
 
-        <select name = "user_feature_options" class="multipleSelect" multiple name= "user_features_mult">
+        <select name = "user_feature_options[]" , id = "user_feature_options", class="multipleSelect" multiple name= "user_features_mult">
           <option value="amazing">Amazing</option>
           <option value="awesome">Awesome</option>
           <option value="beach">Beach</option>
@@ -183,12 +261,13 @@
 
       <script>
         $('.multipleSelect').fastselect();
+        var $user_feature_options = $('user_feature_options[]');
         $(document).ready(function(){
-        $(".myConfirmButton").click(function(){
+        $(".button").click(function(){
         // this line creates the array of all the checked inputs
-        var values = $('#user_feature_options').val()
+        var user_feature_options1 = $('#user_feature_options[]').val()
           $.ajax({
-            url:"/processlist",
+            url:"/trail_recommendations",
             dataType:'html',
             type:'post',
             contentType: 'application/x-www-form-urlencoded',
@@ -300,7 +379,8 @@
 
     <div ><h4>*Some trail features only available for a limited subset of trails</h4></div>
 
-        <button type="submit">SHOW ME SOME TRAILS!</button>
+        <button class = "button" type="submit">SHOW ME SOME TRAILS!</button>
+
 
     </div>
 </form>

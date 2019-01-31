@@ -3,7 +3,9 @@
 <title>hikepnw.us</title>
 
 <head>
-  <h3>You might like these trails!</h3>
+  <div style="text-align:center">
+  <h1>You might like these trails!</h1>
+  </div>
 
   <link rel="stylesheet" href="../static/src/css/style.css">
   <style>
@@ -16,6 +18,11 @@
         body {
             background-size: auto;
         }
+      .main h4 {m
+      font-size: 1.5em;
+      font-family: 'Nunito Sans';
+      color: white;
+      }
     </style>
 
 </head>
@@ -28,7 +35,7 @@
 <div class="cards">
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[0]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -51,7 +58,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{ card_image_urls[1] }}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -74,7 +81,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{ card_image_urls[2] }}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -97,7 +104,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[3]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -120,7 +127,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[4]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -136,14 +143,14 @@
       </div>
       <div class="card-flap flap2">
         <div class="card-actions">
-          <a href="{{ trail_urls[4]}}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
+          <a href="{{ trail_urls[4] }}" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"  class="btn">View on AllTrails</a>
         </div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[5]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -166,7 +173,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[6]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -189,7 +196,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[7]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -212,7 +219,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[8]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -235,7 +242,7 @@
   </div>
 
   <div class="card">
-    <img src="https://cdn-assets.alltrails.com/uploads/photo/image/20949014/large_076bab28eb8fc4c04fb547b0ef38820e.jpg">
+    <img src="{{card_image_urls[9]}}">
     <div class="card-title">
       <a href="#" class="toggle-info btn">
         <span class="left"></span>
@@ -257,7 +264,11 @@
     </div>
   </div>
 
+<br><br><br><br>
 
+<div>
+  <h4 style="text-align:center; color:white" class="name"> Your search was for trails located in {{user_location}} and filtered for {{trail_feature_select1}} and {{trail_feature_select2}}. Your preferences were aligned with AllTrails.com reviewers who also used words like these in their reviews: {{input_user_features}} </h4>
+</div>
 
 </div>
 
@@ -265,8 +276,7 @@
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
-
-  <script  src="../static/src/js/index.js"></script>
+<script src="../static/src/js/index.js"></script>
 
 
 </body>
