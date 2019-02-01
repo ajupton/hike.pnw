@@ -3,167 +3,16 @@
 <!--Font-->
   <link href='https://fonts.googleapis.com/css?family=Nunito Sans' rel='stylesheet'>
 <!-- Favicon -->
-  <link rel="icon" href="../static/src/images/hikepnw_logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../static/src/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../static/src/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../static/src/images/favicon-16x16.png">
+  <link rel="manifest" href="../static/src/images/site.webmanifest">
+  <link rel="mask-icon" href="../static/src/images/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 
-
-<style>
-  #menubar{
-  width:100%;
-  height:50px;
-  background: rgba(0,0,0,0);
-  }
-  .logoframe {
-    height: 30px;      /* equals max image height */
-    width: 60px;
-    white-space: nowrap;
-    text-align: center;
-    display: inline-block;
-  }
-
-  .helper {
-      display: inline-block;
-      height: 100%;
-      vertical-align: middle;
-  }
-
-  .logo {
-      vertical-align: middle;
-      max-height: 30px;
-      max-width: 60px;
-  }
-  .menuspacer {
-  height: 100%;
-  width: 25px;
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
-  line-height: 50px;
-  }
-  .menuactive {
-  color: #999966;
-  text-decoration: none;
-  }
-  .menu, .menu:visited{
-    height: 100%;
-    width: 80px;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    line-height: 50px;
-    color: #2E3759;
-    text-decoration: none;
-  }
-  .menu:hover {
-    color: white;
-    background: #000000;
-    text-decoration: none;
-  }
-  .menu:active {
-    color: #2E3759;
-    text-decoration: none;
-  }
-
-  body{
-    background-image:url('https://www.teamunify.com/pnws2/_images/cust_bg_203_1315415959177.jpg');
-    width:100%;
-    background-size: cover;
-  }
-  @media only screen and (max-width: 600px) {
-      body {
-          background-size: auto;
-      }
-  }
- .main {
- margin-top: 100px;
- padding-bottom: 50px;
- }
- .main h1 {
- font-size: 3.5em;
- font-family: 'Nunito Sans';
- color: white;
- }
- .main h2 {
- font-size: 2em;
- font-family: 'Nunito Sans';
- color: white;
- }
- .main h3 {
- font-size: 2em;
- font-family: 'Nunito Sans';
- color: white;
- }
- .main h4 {m
- font-size: 1.5em;
- font-family: 'Nunito Sans';
- color: white;
- }
- .main p {
- font-size:1em;
- font-family: 'Nunito Sans';
- color: #2E3759;
- }
- .main form {
- font-size:1em;
- font-family: 'Nunito Sans';
- color: #2E3759;
- }
- .main table {
- font-size:1em;
- font-family: 'Nunito Sans';
- color: #2E3759;
- }
- .main td {
- font-size:1em;
- font-family: 'Nunito Sans';
- color: #2E3759;
- }
-     button {
-         padding: 1vh 2vw;
-         background-color: #2E3759;
-         color: white;
-         border-radius: 20px;
-         border-color: white;
-         padding-left: 18px;
-         padding-right: 18px;
-         font-size: 24px;
-         font-weight: bold;
-     }
-     button:hover {
-         background-color: rgba(0,0,0,0);
-         color: #2E3759;
-         border-color: #2E3759;
-     }
-     input {
-       border: 0;
-       outline: 0;
-       background: transparent;
-       border-bottom: 1px solid black;
-     }
-     select {
-       font-size: 1.3em;
-       padding:10px;
-       -webkit-appearance: none;
-              -moz-appearance: none;
-               appearance: none;
-               margin: 10px;
-               background-color: #DEDDDA;
-               color: #DF611F;
-               outline: none;
-               border: none;
-             }
-     hr{
-       border: 0;
-         height: 3px;
-         background: #DEDDDA;
-     }
-</style>
-
-
-
-<div class="overlay">
-
-</div>
-
+<!-- Stylesheet -->
+  <link href="../static/src/css/input_style.css" rel="stylesheet">
 
 <title>hikepnw.us</title>
 </head>
@@ -174,7 +23,7 @@
    </div>
    <div class="logoframe">
        <span class="helper"></span>
-       <a href="/"><img class="logo" src="../static/src/images/hikepnw_logo.png" height=30 /></a>
+       <a href="/"><img class="logo" src="../static/src/images/hikepnw_logo.png" height=60 /></a>
    </div>
    <div class="menu">
      <a href="about" class="menu">About</a>
@@ -185,18 +34,20 @@
  </div>
 
 
-
+<!-- Collect all user input -->
 <body>
     <div class="main">
       <div style="text-align:center">
       <br><br><br>
       <div class="starter-template">
         <h1>FIND A TRAIL THAT FITS YOU!</h1>
-      </div>
+    </div>
+
+<!-- Location Input -->
 <form name="ideal_hike" action='/trail_recommendations', method='POST'>
       <div ><h3>Where are you headed?</h3></div>
       <select name="user_location" id="user_location" class="selectpicker form-control">
-          <option selected="selected" value = 'e'>Select Pacific Northwest Location:</option>
+          <option selected="selected" value = 'e'>Select Pacific Northwest Location</option>
           <option value="Eastern Oregon">Eastern Oregon</option>
           <option value="Eastern Washington">Eastern Washington</option>
           <option value="North Central Oregon">North Central Oregon (greater Portland)</option>
@@ -211,7 +62,7 @@
       </select>
       <br>
 
-
+<!-- Ideal Hike Description Input -->
     <div ><h3>Describe your ideal hike in a few key words:</h3></div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://rawgit.com/dbrekalo/fastselect/master/dist/fastselect.min.css">
@@ -258,36 +109,16 @@
           <option value="wonderful">Wonderful</option>
         </select>
 
-
+<!-- Javascript to record Multiselect Input Selections -->
       <script>
         $('.multipleSelect').fastselect();
         var $user_feature_options = $('user_feature_options[]');
-        $(document).ready(function(){
-        $(".button").click(function(){
-        // this line creates the array of all the checked inputs
-        var user_feature_options1 = $('#user_feature_options[]').val()
-          $.ajax({
-            url:"/trail_recommendations",
-            dataType:'html',
-            type:'post',
-            contentType: 'application/x-www-form-urlencoded',
-            data : {
-               listinput: values
-            },
-            success: function( data ){
-            $('#myFeedback').html( data );
-          },
-            error: function( errorThrown ){
-            $('#myFeedback').html( errorThrown );
-          }
-            });
-        });
-        });
       </script>
 
       <br>
-      <div ><h3>Any must have trail features?</h3></div>
 
+<!-- Trail Filters -->
+      <div ><h3>Any must have trail features?</h3></div>
         <table align="center">
           <tr>
             <td>
@@ -379,12 +210,13 @@
 
     <div ><h4>*Some trail features only available for a limited subset of trails</h4></div>
 
-        <button class = "button" type="submit">SHOW ME SOME TRAILS!</button>
+    <button class = "button" type="submit">SHOW ME SOME TRAILS!</button>
 
 
     </div>
 </form>
-
+<br><br><br>
+  <div ><h4>Copyright © hikepnw 2019</h4></div>
 
     </div>
     </div>

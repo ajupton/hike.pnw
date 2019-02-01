@@ -16,8 +16,6 @@ from scipy.sparse import coo_matrix, csc_matrix
 from scipy import sparse
 
 
-pd.options.display.max_columns=25
-
 #Initialize app
 app = Flask(__name__, static_url_path='/static')
 
@@ -29,6 +27,18 @@ def index():
 #After the user hits submit, the index page redirects to trail_recommendations.html
 @app.route('/trail_recommendations', methods=['GET', 'POST'])
 def recommendations():
+
+    """Render the trail_recommendations.html page
+
+    Args:
+        Nothing
+
+    Returns:
+        the trail_recommendations.html template, this includes hiking trails
+        recommendations based on user-input. Up to 10 trails are providedself.
+        Trail options are presented in cards that include a photo taken on the
+        trail, a short description of the trail, and a link to the trail
+        profile page on AllTrails.com"""
 
     # Gather user input from ideal hike text selection
     user_input = request.form.getlist('user_feature_options[]')
@@ -251,16 +261,16 @@ def recommendations():
       '''
       Function to produce user recommendations
       Required Input -
-          - model = Trained model
-          - interactions = dataset used for training the model
-          - trail_urls = urls to return from predictions
+          - model = Trained LightFM model
+          - interactions = same dataset used for training the model - user/trail ratings sparse matrix
+          - trail_urls_info = urls, descriptions, and card images to return from predictions
           - user_id = user ID for which we need to generate recommendation
           - user_dict = Dictionary type input containing interaction_index as key and user_id as value
           - trail_dict = Dictionary type input containing trail_id as key and item_name as value
           - threshold = value above which the rating is favorable in new interaction matrix
-          - nrec_items = Number of output recommendation needed
+          - nrec_items = Number of output recommendations to be filtered
           - location = location filter selection
-          - trail_feature_select1 (1-3) = trail filter feature selections
+          - trail_feature_select1 (1-2) = trail filter feature selections
       Expected Output -
           - Prints list of trails the given user has already rated
           - Prints list of N recommended trails which new user hopefully will be interested in
