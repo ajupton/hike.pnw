@@ -315,6 +315,18 @@ def recommendations():
 
     return render_template('trail_recommendations.html', trail_names = trail_names, trail_overviews = trail_overviews, trail_urls = trail_urls, card_image_urls = card_image_urls, trail_feature_select1 = trail_feature_select1, trail_feature_select2 = trail_feature_select2, user_location = user_location, input_user_features = user_input)
 
+@app.route('/about')
+def park_about():
+    ''' About page
+    '''
+    return render_template("about.html")
+
+
+@app.route('/contact')
+def park_contact():
+    ''' Contact page
+    '''
+    return render_template("contact.html")
+
 if __name__ == '__main__':
-    #this runs your app locally
     app.run(host='0.0.0.0', port=8080, debug=True)

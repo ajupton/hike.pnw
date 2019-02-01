@@ -1,0 +1,195 @@
+#menubar{
+width:100%;
+height:50px;
+background: rgba(0,0,0,0);
+}
+
+.logoframe {
+  height: 30px;      /* equals max image height */
+  width: 60px;
+  white-space: nowrap;
+  text-align: center;
+  display: inline-block;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.logo {
+    vertical-align: middle;
+    max-height: 60px;
+    max-width: 100px;
+}
+
+.menuspacer {
+height: 100%;
+width: 25px;
+display: inline-block;
+vertical-align: middle;
+text-align: center;
+line-height: 50px;
+}
+
+.menuactive {
+color: #999966;
+text-decoration: none;
+}
+
+.menu, .menu:visited{
+  height: 100%;
+  width: 80px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 50px;
+  color: #999966;
+  text-decoration: none;
+  font-family: 'Nunito Sans';
+}
+
+.menu:hover {
+  color: white;
+  background: #000000;
+  text-decoration: none;
+}
+
+.menu:active {
+  color: #2E3759;
+  text-decoration: none;
+}
+
+body{
+  background-image:url('https://www.fe.training/wp-content/uploads/2017/08/blue-mountain-edges-dark-grad.jpg');
+  width:100%;
+  background-size: cover;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-size: auto;
+    }
+}
+
+
+
+.main {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: left;
+  vertical-align: top;
+
+}
+
+.main h1 {
+font-size: 3.5em;
+font-family: 'Nunito Sans';
+color: white;
+}
+
+.main h2 {
+font-size: 2em;
+font-family: 'Nunito Sans';
+color: white;
+}
+
+.main h3 {
+font-size: 2em;
+font-family: 'Nunito Sans';
+color: white;
+}
+
+.main h4 {m
+font-size: 1.5em;
+font-family: 'Nunito Sans';
+color: white;
+}
+
+.main p {
+font-size:1em;
+font-family: 'Nunito Sans';
+color: white;
+}
+
+.main form {
+font-size:1em;
+font-family: 'Nunito Sans';
+color: #2E3759;
+}
+
+.main table {
+font-size:1em;
+font-family: 'Nunito Sans';
+color: #2E3759;
+}
+
+.main td {
+font-size:1em;
+font-family: 'Nunito Sans';
+color: #2E3759;
+}
+
+button {
+   padding: 1vh 2vw;
+   background-color: #2E3759;
+   color: white;
+   border-radius: 20px;
+   border-color: white;
+   padding-left: 18px;
+   padding-right: 18px;
+   font-size: 24px;
+   font-weight: bold;
+}
+
+button:hover {
+   background-color: rgba(0,0,0,0);
+   color: #2E3759;
+   border-color: #2E3759;
+}
+
+input {
+ border: 0;
+ outline: 0;
+ background: transparent;
+ border-bottom: 1px solid black;
+}
+
+select {
+ font-size: 1.3em;
+ padding:10px;
+ -webkit-appearance: none;
+        -moz-appearance: none;
+         appearance: none;
+         margin: 10px;
+         background-color: #DEDDDA;
+         color: #DF611F;
+         outline: none;
+         border: none;
+       }
+
+hr{
+ border: 0;
+   height: 3px;
+   background: #DEDDDA;
+}
+
+.habouts {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 30px;
+  text-align: left;
+
+}
+
+.abouts {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: left;
+  vertical-align: top;
+
+}
