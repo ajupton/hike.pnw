@@ -29,9 +29,6 @@
    <div class="menu">
      <a href="about" class="menu">About</a>
    </div>
-   <div class="menu">
-     <a href="contact" class="menu">Contact</a>
-   </div>
  </div>
 
 
@@ -140,7 +137,6 @@
                 <option value="no_shade">Full Sun (no shade)*</option>
                 <option value="historic_site">Historic Site*</option>
                 <option value="horses">Horses known in area</option>
-                <option value="hot_springs">Hot Springs*</option>
                 <option value="lake">Lake</option>
                 <option value="long">Long (8+ miles)</option>
                 <option value="loop_trail">Loop Trail</option>
@@ -152,7 +148,6 @@
                 <option value="paved">Paved*</option>
                 <option value="river">River</option>
                 <option value="rock_climbing">Rock Climbing</option>
-                <option value="sea_kayaking">Sea Kayaking*</option>
                 <option value="short">Short (under 3 miles)</option>
                 <option value="snow">Snow</option>
                 <option value="snowshoeing">Snowshoeing</option>
@@ -181,7 +176,6 @@
                 <option value="no_shade">Full Sun (no shade)*</option>
                 <option value="historic_site">Historic Site*</option>
                 <option value="horses">Horses known in area</option>
-                <option value="hot_springs">Hot Springs*</option>
                 <option value="lake">Lake</option>
                 <option value="long">Long (8+ miles)</option>
                 <option value="loop_trail">Loop Trail</option>
@@ -193,7 +187,6 @@
                 <option value="paved">Paved*</option>
                 <option value="river">River</option>
                 <option value="rock_climbing">Rock Climbing</option>
-                <option value="sea_kayaking">Sea Kayaking*</option>
                 <option value="short">Short (under 3 miles)</option>
                 <option value="snow">Snow</option>
                 <option value="snowshoeing">Snowshoeing</option>
@@ -211,13 +204,45 @@
 
     <div ><h4>*Some trail features only available for a limited subset of trails</h4></div>
 
-    <button class = "button" type="submit">SHOW ME SOME TRAILS!</button>
+  </div>
+
+  <div id="formsubmitbutton">
+    <button class="button" type="submit" name="submitter" value="SHOW ME SOME TRAILS!" onclick="ButtonClicked()">
+      SHOW ME SOME TRAILS!
+    </button>
+  </div>
+  <div id="buttonreplacement" style="margin-left:30px; display:none;">
+    <img src="//media2.giphy.com/media/11FuEnXyGsXFba/source.gif" alt="loading...">
+  </div>
+
+  <script type="text/javascript">
+    function ButtonClicked()
+    {
+       document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
+       document.getElementById("buttonreplacement").style.display = ""; // to display
+       return true;
+    }
+    var FirstLoading = true;
+    function RestoreSubmitButton()
+    {
+       if( FirstLoading )
+       {
+          FirstLoading = false;
+          return;
+       }
+       document.getElementById("formsubmitbutton").style.display = ""; // to display
+       document.getElementById("buttonreplacement").style.display = "none"; // to undisplay
+    }
+    // To disable restoring submit button, disable or delete next line.
+    document.onfocus = RestoreSubmitButton;
+  </script>
 
 
-    </div>
+
+
 </form>
 <br><br><br>
-  <div ><h4>Copyright © hikepnw 2019</h4></div>
+  <div style="text-align:center;"><h4>Copyright © hikepnw 2019</h4></div>
 
     </div>
     </div>

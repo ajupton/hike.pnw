@@ -107,7 +107,6 @@ def recommendations():
     con = None
     con = psycopg2.connect(database = dbname, user = username)
 
-
     # User features
     user_features_query = """
     SELECT * FROM user_features;
@@ -152,8 +151,8 @@ def recommendations():
           - Pandas dataframe with user-item interactions ready to be fed in a recommendation algorithm
       '''
       interactions = df.groupby([user_col, item_col])[rating_col] \
-              .sum().unstack().reset_index(). \
-              fillna(0).set_index(user_col)
+              .sum().unstack(level=0, fill_value=0.0).T.reset_index() \
+              .set_index(user_col)
       if norm:
           interactions = interactions.applymap(lambda x: 1 if x > threshold else 0)
       return interactions
