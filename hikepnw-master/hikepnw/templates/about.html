@@ -8,6 +8,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../static/src/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/src/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../static/src/images/favicon-16x16.png">
+    <link rel="icon" href="../static/src/images/favicon.ico" type="image/x-icon">
     <link rel="manifest" href="../static/src/images/site.webmanifest">
     <link rel="mask-icon" href="../static/src/images/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
@@ -33,7 +34,7 @@
         <a href="/"><img class="logo" src="../static/src/images/hikepnw_logo.png" height=60 /></a>
     </div>
     <div class="menu">
-      <a href="about" class="menu" style="color: white">About</a>
+      <a href="about" class="menu">About</a>
     </div>
   </div>
 
@@ -53,10 +54,10 @@
       <div style="text-align:left;vertical-align:top;">
         <img style="height:300px;float:right;padding-left:20px;" src="../static/src/images/pnwhike_map.png">
         <p style="text-align: justify;">
-          The majestic landscapes the Pacific Northwest are home to thousands of hiking trails that offer a remarkable diversity of experiences. From the beaches of the Pacific coast, to the peaks of the Cascades, to high desert of eastern Oregon, it can be a little overwhelming to decide where to go next.
+          The majestic landscapes the Pacific Northwest are home to thousands of hiking trails that offer a remarkable diversity of experiences. From the beaches of the Pacific coast, to the peaks of the Cascades, to the high desert of eastern Oregon, it can be a little overwhelming to decide where to go next.
         </p>
         <p style="text-align: justify;">
-          The hikepnw.us project serves as your guide to the many hiking gems in the Pacific Northwest. Think of it as having an expert making hiking trail recommndations that are personalized to you! By using hikepnw.us to plan your next outdoor adventure, you'll spend less time searching and more time out on the trail!
+          The hikepnw.us project serves as your guide to the many hiking gems in the Pacific Northwest. Think of it as having an expert making hiking trail recommendations that are personalized to you! By using hikepnw.us to plan your next outdoor adventure, you'll spend less time searching and more time out on the trail!
         </p>
       </div>
     </div>
@@ -70,7 +71,7 @@
     <div class="main">
       <div style="text-align:left;vertical-align:top;">
         <p style="text-align: justify;">
-          The data behind hikepnw.us consists of trail information, trail ratings, and trail reviews from AllTrails®. More than 150,000 reviews from over 60,000 users across over 3,300 hiking trails are harnessed to make expert recommendations tailored to the specific interests of individual users. All data are stored in a PostgreSQL database.
+          The data behind hikepnw.us consists of trail information, trail ratings, and trail reviews from AllTrails®. More than 150,000 reviews from over 60,000 users are harnessed to make expert recommendations across over 3,200 hiking trails tailored to the specific interests of individual users.
         </p>
       </div>
     </div>
@@ -89,8 +90,8 @@
         To help refine recommendations, a couple of "must have" trail filters are applied based on trail features. This makes sure that recommended trails are truly personalized to the interests of the user.
       </p>
       <p style="text-align: justify;">
-        The backend of the application was built using the <a href="http://flask.pocoo.org/" style="color: white" class="aboutlink" target="_blank">Flask</a> microframework and the data was handled using the Python modules <a href="http://pandas.pydata.org/" class="aboutlink" style="color: white" target="_blank">pandas</a>, <a href="http://www.numpy.org" class="aboutlink" style="color: white" target="_blank">NumPy</a>, <a href="https://www.scipy.org/" class="aboutlink" style="color: white" target="_blank">SciPy</a>, and <a href="http://www.sqlalchemy.org/" class="aboutlink" style="color: white" target="_blank">SQLAlchemy</a>.
-        The application is hosted on an <a href="https://aws.amazon.com/" style="color: white" class="aboutlink" target="_blank">Amazon Web Services</a> Ubuntu microinstance and served using the <a href="https://httpd.apache.org/" style="color: white" class="aboutlink" target="_blank">Apache HTTP Server</a>. The user interfaces for the site were constructed using HTML, CSS, bootstrap, and fastselect.
+        The backend of the application was built using the <a href="http://flask.pocoo.org/" style="color: white" class="aboutlink" target="_blank">Flask</a> microframework and the data were handled using the Python modules <a href="http://pandas.pydata.org/" class="aboutlink" style="color: white" target="_blank">pandas</a>, <a href="http://www.numpy.org" class="aboutlink" style="color: white" target="_blank">NumPy</a>, <a href="https://www.scipy.org/" class="aboutlink" style="color: white" target="_blank">SciPy</a>, and <a href="http://www.sqlalchemy.org/" class="aboutlink" style="color: white" target="_blank">SQLAlchemy</a>. All data are stored in a PostgreSQL database.
+        The application is hosted on an <a href="https://aws.amazon.com/" style="color: white" class="aboutlink" target="_blank">Amazon Web Services</a> Ubuntu microinstance and served using nginx and gunicorn. The user interfaces for the site were constructed using HTML, CSS, bootstrap, and fastselect.
       </p>
     </div>
   </div>

@@ -57,14 +57,14 @@ def recommendations():
     dbname = 'pnw_hike'
 
     # Set postgres username
-    username = 'andy'
+    username = 'ubuntu'
 
     ## Using an engine to connect to the postgres db
-    engine = create_engine('postgres://%s@localhost/%s'%(username,dbname))
+    engine = create_engine('postgres://%s:insight@localhost/%s'%(username, dbname), paramstyle="format")
 
     # Connect to make queries using psycopg2
     con = None
-    con = psycopg2.connect(database = dbname, user = username)
+    con = psycopg2.connect(database = dbname, user = username, password = 'insight', port = 5432)
 
     # User features
     user_features_query = """
