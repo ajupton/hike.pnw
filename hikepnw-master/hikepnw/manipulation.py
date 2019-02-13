@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 
+# For creating sparse matrices
+from scipy.sparse import coo_matrix, csc_matrix
+from scipy import sparse
 
 # Add ALL the features for the new user
 def parse_input_descriptors(input_user_features):
@@ -51,7 +54,7 @@ def parse_input_descriptors(input_user_features):
     user_feature_new['beginnger_friendly'] = pd.np.where(input_user_features[0].str.contains('|'.join(['easy', 'beginner'])), 1, 0)
     user_feature_new['experts_only'] = pd.np.where(input_user_features[0].str.contains('|'.join(['expert', 'hard','difficult', 'tough'])), 1, 0)
     user_feature_new['waterfalls'] = pd.np.where(input_user_features[0].str.contains('|'.join(['waterfall', 'waterfalls','falls'])), 1, 0)
-    user_feature_new.rename(index={0: 'new_user'})
+    user_feature_new = user_feature_new.rename(index={0: 'new_user'})
     user_feature_new.index.names = ['review_author']
     return user_feature_new
 
@@ -66,5 +69,7 @@ def concatenate_csc_matrices_by_columns(matrix1, matrix2):
   new_ind_ptr = matrix2.indptr + len(matrix1.data)
   new_ind_ptr = new_ind_ptr[1:]
   new_ind_ptr = np.concatenate((matrix1.indptr, new_ind_ptr))
+  matrix = csc_matrix((new_data, new_indices, new_ind_ptr))
+  matrix = matrix.T # transpose to revert back to rows/columns as in original matrices
 
-  return csc_matrix((new_data, new_indices, new_ind_ptr))
+  return matrix

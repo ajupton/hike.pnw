@@ -141,14 +141,15 @@ def recommendations():
     # Run model with new user features and interactions
     NUM_THREADS = 4 # The t2.xlarge instance supports up to 4 cores, we'll use all 4 here
     NUM_COMPONENTS = 30
-    NUM_EPOCHS = 3
+    NUM_EPOCHS = 5
     ITEM_ALPHA = 1e-6
 
-    # Let's fit a WARP model: these generally have the best performance.
-    model = LightFM(loss='warp', item_alpha=ITEM_ALPHA, no_components=NUM_COMPONENTS, random_state=42)
+    # Let's train a WARP model: these generally have the best performance.
+    model = LightFM(loss='warp', item_alpha=ITEM_ALPHA, no_components=NUM_COMPONENTS, random_state=15)
 
-    # Run 3 epochs
-    model = model.fit(interactions_new_user, user_features=new_user_features, epochs=NUM_EPOCHS, num_threads=NUM_THREADS)
+    # Fit model
+    model = model.fit(interactions=new_interactions_matrix, user_features=new_user_features,
+                      epochs=NUM_EPOCHS, num_threads=NUM_THREADS)
 
     # Run the model
     trail_names, trail_overviews, trail_urls, card_image_urls = new_user_recommendation(model,
@@ -159,7 +160,7 @@ def recommendations():
                                                                                         trail_feature_select1=trail_feature_select1,
                                                                                         trail_feature_select2=trail_feature_select2,
                                                                                         user_dict=user_dict, trail_dict=trails_dict,
-                                                                                        nrec_items=1000,
+                                                                                        nrec_items=1500,
                                                                                         threshold=4)
 
     # Change 'e' if selected
