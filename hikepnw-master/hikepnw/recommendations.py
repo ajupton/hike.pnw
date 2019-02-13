@@ -10,7 +10,7 @@ def new_user_recommendation(model, interactions, trail_urls_info, user_dict, tra
     Required Input -
         - model = Trained LightFM model
         - interactions = same dataset used for training the model - user/trail ratings sparse matrix
-        - trail_urls_info = urls, descriptions, and card images to return from predictions
+        - trail_urls_info = urls, descriptions, and card image urls to return from predictions
         - user_id = user ID for which we need to generate recommendation
         - user_dict = Dictionary type input containing interaction_index as key and user_id as value
         - trail_dict = Dictionary type input containing trail_id as key and item_name as value

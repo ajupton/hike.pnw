@@ -28,18 +28,19 @@ def index():
 #After the user hits submit, the index page redirects to trail_recommendations.html
 @app.route('/trail_recommendations', methods=['GET', 'POST'])
 def recommendations():
-    """Render the trail_recommendations.html page
+    """
+    Render the trail_recommendations.html page
 
     Args:
         Nothing
 
     Returns:
         the trail_recommendations.html template, this includes hiking trails
-        recommendations based on user-input. Up to 10 trails are providedself.
-        Trail options are presented in cards that include a photo taken on the
+        recommendations based on user-input. Up to 10 trails are provided.
+        Trail options are presented in cards that include a photo taken of the
         trail, a short description of the trail, and a link to the trail
-        profile page on AllTrails.com"""
-
+        profile page on AllTrails.com
+    """
     # Gather user input from ideal hike text selection
     user_input = request.form.getlist('user_feature_options[]')
     input_user_features = pd.DataFrame([" ".join(user_input)])
@@ -94,11 +95,10 @@ def recommendations():
     # Convert user-feature space to sparse matrix
     user_features = sparse.csr_matrix(user_features.values)
 
-
     # Create a large sparse dataframe of extant user reviews/ratings
     interactions = create_interaction_matrix(trail_reviews_raw_from_sql, user_col='review_author', item_col='trail_name', rating_col='review_rating', norm=False, threshold=None)
 
-    # Align users in the interaction and user matrices due to dropping some trails ----FIX THIS LATER!!
+    # Align users in the interaction and user matrices due to dropping some trails
     # Identify which users are in the interaction matrix and not in user feature space
     key_diff = set(interactions.index).difference(user_features_from_sql.index)
     where_diff = interactions.index.isin(key_diff)
@@ -114,19 +114,6 @@ def recommendations():
 
     # Convert new user features to a sparse matrix
     user_feature_new_sparse = sparse.csr_matrix(user_feature_new.values)
-
-    def concatenate_csc_matrices_by_columns(matrix1, matrix2):
-      '''
-      Function to horizontally stack non-2D/non-coo-matrices because
-      hstack is unhappy with my matrices
-      '''
-      new_data = np.concatenate((matrix1.data, matrix2.data))
-      new_indices = np.concatenate((matrix1.indices, matrix2.indices))
-      new_ind_ptr = matrix2.indptr + len(matrix1.data)
-      new_ind_ptr = new_ind_ptr[1:]
-      new_ind_ptr = np.concatenate((matrix1.indptr, new_ind_ptr))
-
-      return csc_matrix((new_data, new_indices, new_ind_ptr))
 
     ## Combine new user-feature sparse matrix with current users' sparse matrix
     new_user_features = concatenate_csc_matrices_by_columns(user_feature_new_sparse, user_features)
@@ -152,13 +139,13 @@ def recommendations():
     user_dict = create_user_dict(interactions = new_interactions_df)
 
     # Run model with new user features and interactions
-    NUM_THREADS = 2 # I can only support one thread on my machine :(
+    NUM_THREADS = 4 # The t2.xlarge instance supports up to 4 cores, we'll use all 4 here
     NUM_COMPONENTS = 30
     NUM_EPOCHS = 3
     ITEM_ALPHA = 1e-6
 
     # Let's fit a WARP model: these generally have the best performance.
-    model = LightFM(loss='warp', item_alpha=ITEM_ALPHA, no_components=NUM_COMPONENTS)
+    model = LightFM(loss='warp', item_alpha=ITEM_ALPHA, no_components=NUM_COMPONENTS, random_state=42)
 
     # Run 3 epochs
     model = model.fit(interactions_new_user, user_features=new_user_features, epochs=NUM_EPOCHS, num_threads=NUM_THREADS)
