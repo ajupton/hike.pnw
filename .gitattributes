@@ -2,3 +2,4 @@
 * text=auto
 static/* linguist-vendored
 src/* linguist-vendored
+*.rb linguist-language=Python
